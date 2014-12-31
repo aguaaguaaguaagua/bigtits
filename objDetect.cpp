@@ -469,19 +469,23 @@ void alongTheLineDetector_1::drawGrad()
 	getGoodPosition();
 
 	Mat showGrad(input);
-	cvtColor(showGrad,showGrad,CV_GRAY2BGR);
+			cvtColor(showGrad,showGrad,CV_GRAY2BGR);
+			MatIterator_<Vec3b> itImg=showGrad.begin<Vec3b>();
 
 	gradInfo tempInfo;
 
 	
 
-	MatIterator_<Vec3b> itImg=showGrad.begin<Vec3b>();
+	
 	//paint by different demands
 	for(int i=0;i< pointGradInfo.size();i++)
 	{
 		//for each point in one same window
 		for(int eachInOneWindow=0;eachInOneWindow < pointGradInfo[i].gradRawAng.size();eachInOneWindow++)
 		{
+
+			
+
 			Point startPt=Point(pointGradInfo[i].location[eachInOneWindow][0],pointGradInfo[i].location[eachInOneWindow][1]);
 			Point endPt  =Point(pointGradInfo[i].location[eachInOneWindow][2],pointGradInfo[i].location[eachInOneWindow][3]);
 			
@@ -489,7 +493,11 @@ void alongTheLineDetector_1::drawGrad()
 
 			
 #ifdef PAINT_ALL_VECTOR
+			
 			//line(showGrad,startPt,endPt,Scalar(255,0,0));
+			
+			//show(showGrad);
+			
 #endif
 
 #ifdef PAINT_GOOD_VECTOR
@@ -519,6 +527,7 @@ void alongTheLineDetector_1::drawGrad()
 				Point startPt=Point(unusualPoints[i]->location[eachInOneWindow][0],unusualPoints[i]->location[eachInOneWindow][1]);
 				Point endPt  =Point(unusualPoints[i]->location[eachInOneWindow][2],unusualPoints[i]->location[eachInOneWindow][3]);
 				itImg[input.cols * startPt.y+startPt.x]=Vec3i(0,255,0);
+
 			//always paint the good VECTORS
 				
 				//if(unusualPoints[i]->statis.indicator[eachInOneWindow])

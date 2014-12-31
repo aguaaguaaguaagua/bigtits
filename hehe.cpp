@@ -66,7 +66,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		vector<Vec4i> lines;
 		HoughLinesP(edges,lines,1,CV_PI/180,50,200,10);
 
-		show(edges);
+		
 
 		cvtColor(test,test,CV_BGR2GRAY);
 		threshold(test,test,10,255,THRESH_BINARY);

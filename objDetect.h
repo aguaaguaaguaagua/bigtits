@@ -15,7 +15,7 @@ extern VideoWriter sd;
 
 #define LOW_B 10
 #define UNASSIGNED 905
-#define THRESH_ANG CV_PI/4
+#define THRESH_ANG CV_PI/6
 const Mat offsetForMask;
 
 
