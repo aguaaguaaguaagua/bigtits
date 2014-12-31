@@ -1,0 +1,33 @@
+﻿生成启动时间为 2015/1/1 0:17:32。
+     1>项目“C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\hehe\hehe.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“x64\Debug\hehe.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+         D:\vs2010\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"x64\Debug\hehe.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc100.pdb" /Gd /TP /errorReport:prompt ROI.cpp
+         ROI.cpp
+     1>ROI.cpp(54): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>ROI.cpp(96): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+       Link:
+         D:\vs2010\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\x64\Debug\hehe.exe" /INCREMENTAL /NOLOGO opencv_calib3d244d.lib opencv_contrib244d.lib opencv_core244d.lib opencv_features2d244d.lib opencv_flann244d.lib opencv_gpu244d.lib opencv_highgui244d.lib opencv_imgproc244d.lib opencv_legacy244d.lib opencv_ml244d.lib opencv_objdetect244d.lib opencv_ts244d.lib opencv_video244d.lib opencv_nonfree244d.lib opencv_calib3d244d.lib opencv_contrib244d.lib opencv_core244d.lib opencv_features2d244d.lib opencv_flann244d.lib opencv_gpu244d.lib opencv_highgui244d.lib opencv_imgproc244d.lib opencv_legacy244d.lib opencv_ml244d.lib opencv_objdetect244d.lib opencv_ts244d.lib opencv_video244d.lib opencv_nonfree244d.lib opencv_haartraining_engined.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Debug\hehe.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\x64\Debug\hehe.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\x64\Debug\hehe.lib" /MACHINE:X64 /PROFILE x64\Debug\global.obj
+         x64\Debug\hehe.obj
+         x64\Debug\meanshiftFilter.obj
+         x64\Debug\MeanshiftSegmentProcessingForMyPic.obj
+         x64\Debug\msImagePro.obj
+         x64\Debug\objDetect.obj
+         x64\Debug\RAList.obj
+         x64\Debug\rlist.obj
+         x64\Debug\ROI.obj
+         x64\Debug\stdafx.obj
+     1>LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/PROFILE”规范)
+         hehe.vcxproj -> C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\x64\Debug\hehe.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\x64\Debug\hehe.exe.manifest" /manifest x64\Debug\hehe.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         正在删除文件“x64\Debug\hehe.unsuccessfulbuild”。
+         正在对“x64\Debug\hehe.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“C:\Users\Administrator\Documents\Visual Studio 2010\Projects\hehe\hehe\hehe.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:06.19
