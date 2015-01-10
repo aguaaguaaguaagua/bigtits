@@ -31,4 +31,5 @@ typedef  Mat OutputPic;
 
 #define show(pic)   {imshow("pic1",pic);waitKey(0);}
 #define show1(pic)  {imshow("pic2",pic);waitKey(0);}
+
 #endif

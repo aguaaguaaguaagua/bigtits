@@ -71,6 +71,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		cvtColor(test,test,CV_BGR2GRAY);
 		threshold(test,test,10,255,THRESH_BINARY);
 
+
+
 		//derived factory
 		fucker :: detectorFactory *detectorFac = new fucker::detectorFactoryShaped;
 		//relevant detector

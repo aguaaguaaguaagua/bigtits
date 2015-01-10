@@ -85,7 +85,27 @@ void distantSpreadLineDetector::alongTheLine(vector<Vec4i>& srcLines)
 }
 */
 ////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////method class functions definitions//////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+inline void CommonMethod::getMask(int wingsize,Mat &dst,const Mat &source,const Point &curLoc)
+{
+	dst=Mat::Mat(source,Rect ( Point(curLoc.x-wingsize,curLoc.y-wingsize),Point(curLoc.x+wingsize+1,curLoc.y+wingsize+1) ) );
+	
+}
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////abstract base detector class///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 
 void detector::drawContour()
@@ -323,7 +343,8 @@ void alongTheLineDetector_1::calcGrad(const Point& curLoc)
 		curLoc.y>maskSize&&
 		curLoc.x<input.cols-maskSize&&
 		curLoc.y<input.rows-maskSize)
-		mask=Mat::Mat(input,Rect(Point(curLoc.x-wing,curLoc.y-wing),Point(curLoc.x+wing+1,curLoc.y+wing+1)));
+		//didn't use classic singleton model
+		CommonMethod::getMask(wing,mask,input,curLoc);
 	else 
 	{
 		cout<<"skip those close to the border"<<endl;
@@ -345,37 +366,44 @@ void alongTheLineDetector_1::calcGrad(const Point& curLoc)
 	
 	
 	
-	int offset=0;
+	
 	
 
 	int offsetX=0,offsetY=0;
 
 	//get the start position
+	Mat AngMask,MagMask;
+	CommonMethod::getMask(wing,AngMask,Ang,curLoc);
+	CommonMethod::getMask(wing,MagMask,Mag,curLoc);
 	itMask=mask.begin<uchar>();
-	itMag=Mag.begin<float>();
-	itAng=Ang.begin<float>();
+	endMask=mask.end<uchar>();
+	itMag=MagMask.begin<float>();
+	itAng=AngMask.begin<float>();
 	//temp var
 	thisPointInfo.anchor = curLoc;
 	Statis temp_statis;
 	
 	int desiredLength=10;
-	
-	for(int shit=0;shit<mask.rows;shit++)
+	int counter=0;
+	for(int shit=0;shit<mask.rows* mask.cols;shit++)
 	{
 
-		for(int fuck=0;fuck<mask.cols;fuck++)
-		{
+		
 
-			if(itMask!=endMask)
-			{
+			
 
 				//debug
-				//Point debug_now=curLoc + Point(offset%maskSize-wing,offset/maskSize-wing);
+				//Point debug_now=curLoc + Point(shit%maskSize-wing,shit/maskSize-wing);
 				//showMaskArea.begin<Vec3b>()[debug_now.x+showMaskArea.cols*debug_now.y]=Vec3b(0,0,255);
 				//show(showMaskArea);
 
 				if(*itMask > LOW_B)
 				{
+					//valid counts
+					counter++;
+					int var=*itMask;
+					
+
 					//main calculation
 					//store the slope of the line
 					if(lineSlope==UNASSIGNED)
@@ -386,8 +414,8 @@ void alongTheLineDetector_1::calcGrad(const Point& curLoc)
 					thisPointInfo.lineAng=lineSlope;
 
 					//store these motherfucka
-					double tempMag= *(itMag+ (curLoc.x-wing+offset%maskSize) + (curLoc.y-wing+offset/maskSize)*input.cols  );
-					double tempAng= *(itAng+ (curLoc.x-wing+offset%maskSize) + (curLoc.y-wing+offset/maskSize)*input.cols  );
+					double tempMag=*(itMag+shit); 
+					double tempAng=*(itAng+shit);
 
 					thisPointInfo.gradRawMag.push_back(tempMag);
 					thisPointInfo.gradRawAng.push_back(tempAng);
@@ -404,7 +432,7 @@ void alongTheLineDetector_1::calcGrad(const Point& curLoc)
 			
 
 					//calc the end point
-					Point startPoint=curLoc+Point(offset%maskSize-wing,offset/maskSize-wing);
+					Point startPoint=curLoc+Point(shit%maskSize-wing,shit/maskSize-wing);
 
 					//debug the algorithm
 					//showMaskArea.begin<Vec3b>()[showMaskArea.cols*startPoint.y+startPoint.x]=Vec3b(0,255,0);
@@ -430,14 +458,8 @@ void alongTheLineDetector_1::calcGrad(const Point& curLoc)
 		
 
 				}
-
-			}
-			offset++;
-			itMask++;
-
-
-		}
-
+				itMask++;
+				
 
 
 	}
@@ -483,7 +505,7 @@ void alongTheLineDetector_1::drawGrad()
 		//for each point in one same window
 		for(int eachInOneWindow=0;eachInOneWindow < pointGradInfo[i].gradRawAng.size();eachInOneWindow++)
 		{
-
+			
 			
 
 			Point startPt=Point(pointGradInfo[i].location[eachInOneWindow][0],pointGradInfo[i].location[eachInOneWindow][1]);
@@ -494,7 +516,7 @@ void alongTheLineDetector_1::drawGrad()
 			
 #ifdef PAINT_ALL_VECTOR
 			
-			//line(showGrad,startPt,endPt,Scalar(255,0,0));
+			line(showGrad,startPt,endPt,Scalar(255,0,0));
 			
 			//show(showGrad);
 			
@@ -547,7 +569,7 @@ void alongTheLineDetector_1::calcPercent(Statis &statis)
 	int numUnusual=0;
 	for(int i=0;i<statis.Diff.size();i++)
 	{
-		if(statis.Diff[i]<THRESH_ANG)
+		if(statis.Diff[i]<THRESH_ANG||abs(statis.Diff[i]-lineSlope)<0.08)
 		{
 			statis.indicator.push_back(true);
 			
@@ -565,7 +587,7 @@ void alongTheLineDetector_1::calcPercent(Statis &statis)
 	{
 		cout<<"percentage above unique, sth's gonna be wrong"<<endl;
 	}
-	
+	cout<<statis.unusualPercent<<endl;
 }
 
 

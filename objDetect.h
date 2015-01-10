@@ -16,10 +16,48 @@ extern VideoWriter sd;
 #define LOW_B 10
 #define UNASSIGNED 905
 #define THRESH_ANG CV_PI/6
+
 const Mat offsetForMask;
 
 
 enum detectorType {COLORED,SHAPED,BROKEN,SPREAD};
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////general singleton methods class//////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+class CommonMethod
+{
+private:
+	CommonMethod(){};
+	static CommonMethod* methodInst;
+public:
+	
+	static CommonMethod* getMethodInstance()
+	{
+		if(methodInst==NULL)
+			return new CommonMethod();
+	}
+	//add common methods here
+	 static inline void getMask(int wingsize,Mat &mask,const Mat & src,const Point &curLoc);
+	 
+	 class Gabor
+	 {
+	 public:
+		 ~	Gabor()
+		 {
+			 if(CommonMethod::methodInst==NULL)
+				 delete methodInst;
+		 }
+	 };
+	 static Gabor* gabor;
+};
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 //base detector
 namespace fucker
@@ -132,6 +170,7 @@ public:
 	{
 
 	};
+	
 	void getGradOfROI(const vector<Vec4i>&);
 	void alongTheLine(const vector<Vec4i>&);
 	void calcGrad(const Point&);
